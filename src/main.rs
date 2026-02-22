@@ -2,7 +2,7 @@
 #![no_main]
 #![allow(unused_variables)]
 
-// Include the boot2 bootloader crate
+mod reset;
 mod boot2;
 
 use core::panic::PanicInfo;

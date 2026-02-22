@@ -9,10 +9,16 @@ MEMORY{
     LENGTH = 2M - 256
 }
 
+estack = ORIGIN(RAM) + LENGTH(RAM);
+
 SECTIONS {
     .boot2 : {
         KEEP(*(.boot2*))
     } > RAM AT > BOOTLOADER
+
+    .vector_table : {
+        KEEP(*(.vector_table))
+    } > FLASH
 
     .text : {
         KEEP(*(.text*))
