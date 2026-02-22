@@ -9,6 +9,7 @@ MEMORY{
     LENGTH = 2M - 256
 }
 
+start_ram = ORIGIN(RAM);
 estack = ORIGIN(RAM) + LENGTH(RAM);
 
 SECTIONS {
@@ -22,7 +23,24 @@ SECTIONS {
 
     .text : {
         KEEP(*(.text*))
+        KEEP(*(.rodata*))
     } > FLASH
+
+    .bss : {
+        _bss_start = .;
+        KEEP(*(.bss*))
+        . = ALIGN(4);
+        _bss_end = .;
+    } > RAM
+
+    .data : {
+        _data_start = .;
+        KEEP(*(.data*))
+        . = ALIGN(4);
+        _data_end = .;
+    } > RAM AT > FLASH
+
+    _data_loadaddr = LOADADDR(.data);
 
     /DISCARD/ : {
         *(.ARM.*)

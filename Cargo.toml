@@ -10,3 +10,7 @@ rp2040-boot2 = { version = "0.2" }
 [build-dependencies]
 form = "0.13.0"
 svd2rust = "0.37.1"
+
+[profile.release]
+opt-level = "z"
+lto = true

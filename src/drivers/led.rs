@@ -19,7 +19,7 @@ impl KerlDriver for Led {
 
         resets
             .reset()
-            .write(|w| w.pads_bank0().clear_bit().io_bank0().clear_bit());
+            .modify(|_, w| w.pads_bank0().clear_bit().io_bank0().clear_bit());
 
         while !resets.reset_done().read().pads_bank0().bit_is_set() {}
         while !resets.reset_done().read().io_bank0().bit_is_set() {}
@@ -41,7 +41,10 @@ impl KerlDriver for Led {
         // Configure the pin to SIO mode
         io.gpio25_ctrl().write(|w| w.funcsel().sio_25());
 
-        // Not doing anything here further because I want to turn it on/off myself
+        // Enable output on GPIO25
+        sio.gpio_oe_set()
+            .write(|w| unsafe { w.bits(1 << GPIO_PIN) });
+
         Self { sio }
     }
 }

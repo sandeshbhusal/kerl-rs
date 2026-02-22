@@ -11,6 +11,7 @@ use core::panic::PanicInfo;
 
 use crate::drivers::led;
 use crate::drivers::KerlDriver;
+use crate::reset::sysinit;
 
 #[panic_handler]
 fn panic_handler(info: &PanicInfo) -> ! {
@@ -21,6 +22,8 @@ fn panic_handler(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _init() -> ! {
+    unsafe { sysinit() };
+
     let sysboard_led = led::Led::init();
 
     loop {
