@@ -6,4 +6,4 @@ rustflags = [
     "-C", "link-arg=-Tmemory.ld"
 ]
 
-runner = "probe-rs gdb --chip RP2040"
+runner = "probe-rs run --chip RP2040"

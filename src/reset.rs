@@ -23,3 +23,7 @@ pub static VECTOR_TABLE: [Vector; 2] = [
     },
     Vector { handler: _init },
 ];
+
+/// Initialize the system features
+pub fn sysinit() {
+}
