@@ -1,0 +1,11 @@
+[package]
+name = "kerl"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rp2040_pac = { path = "rp2040_pac" }
+
+[build-dependencies]
+form = "0.13.0"
+svd2rust = "0.37.1"
