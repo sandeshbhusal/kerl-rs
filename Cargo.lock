@@ -520,6 +520,7 @@ name = "kerl"
 version = "0.1.0"
 dependencies = [
  "form",
+ "log",
  "rp2040-boot2",
  "rp2040_pac",
  "svd2rust",

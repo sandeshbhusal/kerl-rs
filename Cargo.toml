@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 rp2040_pac = { path = "rp2040_pac" }
 rp2040-boot2 = { version = "0.2" }
+log = "0.4.29"
 
 [build-dependencies]
 form = "0.13.0"

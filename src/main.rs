@@ -7,10 +7,11 @@ mod reset;
 
 mod conf;
 mod drivers;
+mod log;
 
-use crate::drivers::rtt::Rtt;
+use ::log::{trace, info};
+use crate::log::init_logger;
 use crate::reset::sysinit;
-use core::fmt::Write;
 use core::panic::PanicInfo;
 
 #[panic_handler]
@@ -24,10 +25,16 @@ fn panic_handler(info: &PanicInfo) -> ! {
 pub extern "C" fn _init() -> ! {
     unsafe {
         sysinit();
+        init_logger();
     };
+    info!("");
+    info!("Booting KERL");
+    info!("-------------------");
+    info!("So far the following things have been done:");
+    info!("1. Vector table init");
+    info!("2. Initialize memory");
+    info!("3. RTT protocol init (we are here)");
 
-    let mut rtt = Rtt;
-    write!(rtt, "KERL: Welcome to RTT!\n").unwrap();
     loop {
     }
 }

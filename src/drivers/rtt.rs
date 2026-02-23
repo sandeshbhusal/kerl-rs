@@ -4,7 +4,6 @@
 use core::{
     fmt::Write,
     ptr::addr_of_mut,
-    sync::atomic::{compiler_fence, Ordering},
 };
 
 use crate::conf::rtt::{count_down_channels, count_up_channels, BUFFER_SIZE};
@@ -35,7 +34,7 @@ static mut DOWN_CHANNEL_BUFFERS: [[u8; BUFFER_SIZE as usize]; DOWN_CHANNELS_COUN
 
 #[repr(C)]
 #[derive(Debug)]
-struct RingBuffer {
+pub struct RingBuffer {
     name: *const u8,
     buffer: *mut u8,
     buf_size: u32,
@@ -133,11 +132,11 @@ impl RingBuffer {
 #[repr(C, align(4))]
 #[derive(Debug)]
 pub struct ControlBlock {
-    id: [u8; 16],
-    num_up_chans: u32,
-    num_down_chans: u32,
-    up_chans: [RingBuffer; UP_CHANNELS_COUNT],
-    down_chans: [RingBuffer; DOWN_CHANNELS_COUNT],
+    pub id: [u8; 16],
+    pub num_up_chans: u32,
+    pub num_down_chans: u32,
+    pub up_chans: [RingBuffer; UP_CHANNELS_COUNT],
+    pub down_chans: [RingBuffer; DOWN_CHANNELS_COUNT],
 }
 
 impl ControlBlock {
@@ -178,13 +177,3 @@ impl ControlBlock {
 #[link_section = ".data.rtt"]
 #[no_mangle]
 pub static mut _SEGGER_RTT: ControlBlock = ControlBlock::new();
-
-pub(crate) struct Rtt;
-
-impl Write for Rtt {
-    fn write_str(&mut self, s: &str) -> core::fmt::Result {
-        let uplink = unsafe { &mut _SEGGER_RTT.up_chans[0] };
-        uplink.write(s);
-        Ok(())
-    }
-}

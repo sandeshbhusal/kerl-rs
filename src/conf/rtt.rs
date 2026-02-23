@@ -1,6 +1,7 @@
 use crate::drivers::rtt::{ChannelConfig, ChannelType};
 
 pub const BUFFER_SIZE: u32 = 1024;
+pub const ENABLED: bool = true;
 
 pub(crate) const CHANNEL_CONFIGS: [ChannelConfig; 2] = [
     ChannelConfig {
