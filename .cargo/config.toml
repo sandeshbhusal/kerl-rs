@@ -3,7 +3,8 @@ target = "thumbv6m-none-eabi"
 
 [target.thumbv6m-none-eabi]
 rustflags = [
-    "-C", "link-arg=-Tmemory.ld"
+    "-C", "link-arg=-Tmemory.ld",
+    "-C", "link-arg=-Map=kerl.map",
 ]
 
 runner = "probe-rs run --chip RP2040"

@@ -3,7 +3,7 @@ MEMORY{
     LENGTH = 256
 
     RAM(rwx) : ORIGIN = 0x20000000,
-    LENGTH = 2K
+    LENGTH = 264K
 
     FLASH(rx) : ORIGIN = 0x10000100,
     LENGTH = 2M - 256

@@ -2,16 +2,16 @@
 #![no_main]
 #![allow(unused_variables)]
 
-mod reset;
 mod boot2;
+mod reset;
 
+mod conf;
 mod drivers;
 
-use core::panic::PanicInfo;
-
-use crate::drivers::led;
-use crate::drivers::KerlDriver;
+use crate::drivers::rtt::Rtt;
 use crate::reset::sysinit;
+use core::fmt::Write;
+use core::panic::PanicInfo;
 
 #[panic_handler]
 fn panic_handler(info: &PanicInfo) -> ! {
@@ -22,12 +22,12 @@ fn panic_handler(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _init() -> ! {
-    unsafe { sysinit() };
+    unsafe {
+        sysinit();
+    };
 
-    let sysboard_led = led::Led::init();
-
+    let mut rtt = Rtt;
+    write!(rtt, "KERL: Welcome to RTT!\n").unwrap();
     loop {
-        sysboard_led.toggle();
-        for _ in 0..100_000_000 {}
     }
 }
