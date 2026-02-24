@@ -5,13 +5,14 @@
 mod boot2;
 mod reset;
 
+mod clock;
 mod conf;
 mod drivers;
 mod log;
 
-use ::log::{trace, info};
+use ::log::{info, error};
 use crate::log::init_logger;
-use crate::reset::sysinit;
+use crate::reset::meminit;
 use core::panic::PanicInfo;
 
 #[panic_handler]
@@ -24,16 +25,15 @@ fn panic_handler(info: &PanicInfo) -> ! {
 #[no_mangle]
 pub extern "C" fn _init() -> ! {
     unsafe {
-        sysinit();
+        meminit();
         init_logger();
     };
     info!("");
     info!("Booting KERL");
     info!("-------------------");
-    info!("So far the following things have been done:");
-    info!("1. Vector table init");
-    info!("2. Initialize memory");
-    info!("3. RTT protocol init (we are here)");
+    if let Err(e) = clock::init_clocks() {
+        error!("Failed to initialize clocks: {:?}", e);
+    }
 
     loop {
     }

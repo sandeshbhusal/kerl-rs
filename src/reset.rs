@@ -19,7 +19,6 @@ extern "C" {
     static mut _data_loadaddr: u32;
     static mut _bss_start: u32;
     static mut _bss_end: u32;
-    pub static start_ram: u32;
 
     fn _init();
 }
@@ -35,7 +34,7 @@ pub static VECTOR_TABLE: [Vector; 2] = [
 ];
 
 /// Initialize the system
-pub unsafe fn sysinit() {
+pub unsafe fn meminit() {
     // Zero out the BSS, copy the data to the RAM
     let mut data_start_ptr = &raw mut _data_start;
     let mut data_load_ptr = &raw mut _data_loadaddr;

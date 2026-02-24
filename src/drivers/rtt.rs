@@ -1,10 +1,7 @@
 //! Very simple RTT Driver for post-boot debug
 #![allow(dead_code)]
 
-use core::{
-    fmt::Write,
-    ptr::addr_of_mut,
-};
+use core::ptr::addr_of_mut;
 
 use crate::conf::rtt::{count_down_channels, count_up_channels, BUFFER_SIZE};
 
