@@ -2,18 +2,17 @@
 #![no_main]
 #![allow(unused_variables)]
 
-mod boot2;
-mod reset;
-
-mod clock;
-mod conf;
-mod drivers;
-mod log;
-
-use ::log::{info, error};
-use crate::log::init_logger;
-use crate::reset::meminit;
 use core::panic::PanicInfo;
+
+use log::{error, info};
+
+use crate::{boot::init::meminit, hw::clock, kernel::log::init_logger};
+
+mod conf;
+mod boot;
+mod hw;
+mod drivers;
+mod kernel;
 
 #[panic_handler]
 fn panic_handler(info: &PanicInfo) -> ! {
