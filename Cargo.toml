@@ -3,6 +3,10 @@ name = "kerl"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "kerl"
+path = "src/init.rs"
+
 [dependencies]
 rp2040_pac = { path = "rp2040_pac" }
 rp2040-boot2 = { version = "0.2" }

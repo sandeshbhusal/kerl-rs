@@ -1,5 +1,7 @@
-use crate::conf::rtt::{count_up_channels, ENABLED};
-use crate::drivers::rtt::_SEGGER_RTT;
+use crate::{
+    conf::rtt::{count_up_channels, ENABLED},
+    drivers::rtt::_SEGGER_RTT,
+};
 use core::fmt::Write;
 use log::{Log, Metadata, Record};
 
@@ -51,3 +53,5 @@ pub unsafe fn init_logger() {
     let _ = log::set_logger_racy(&RTT_LOGGER);
     log::set_max_level_racy(log::LevelFilter::Debug);
 }
+
+pub static LOGGING_BACKEND: &str = "RTT";
